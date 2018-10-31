@@ -1,0 +1,174 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    <script src="js/jquery-2.2.3.js"></script>
+    <script src="js/echarts.min.js"></script>
+    <title></title>
+
+</head>
+
+<body>
+    <div id="d23"  style="margin-left:600px;margin-top:50px;font-weight:bold;font-size:large">2008-2018编程语言排行榜</div>
+    <div id="main" style="width: 1200px;height:600px;margin-left:100px;"></div>
+
+    <script type="text/javascript">
+
+        var myChart = echarts.init(document.getElementById('main'));
+
+        myChart.setOption({
+            title: {
+              //  text: '2008-2018编程语言排行榜'
+            },
+            tooltip: {},
+            legend: {
+                data: ['2008-2018编程语言排行榜']
+            },
+            xAxis: {
+
+            },
+            yAxis: { data: [] },
+            series: [{
+
+                type: 'bar',
+                data: []
+            }]
+        });
+
+
+
+        $.get('/js/json.json').done(function (data) {
+
+            ChangeData(data);
+        });
+
+        function ChangeData(data) {
+
+            var i = 0;
+            var interval = setInterval(function () {
+
+                var language = [];
+                var range = [];
+                var month;
+                var rangebili = [];
+                for (var j = 0; j < 20; j++) {
+                    language.push(data[i].sub[j].language);
+                    range.push(data[i].sub[j].range);
+                    rangebili.push(data[i].sub[j].range + "%");
+
+                    month = data[i].sub[j].data;
+                }
+
+
+                language = language.reverse();
+                range = range.reverse();
+                rangebili = rangebili.reverse();
+
+
+                myChart.setOption({
+
+                    yAxis: {
+                        data: language,
+
+                    }
+                    ,
+                    title: { text: month, x: "center", y: "center" },
+
+                    series: [{
+                        data: range,
+                        label: {
+                            normal: {
+                                show: true,
+                                position: 'insideRight',
+                                textStyle: {
+                                    fontSize: 12
+                                }
+                            }
+                        },
+
+                        itemStyle: {
+                            color: function (params) {
+
+                                var color = ['#c23531', '#2f4554', '#61a0a8', '#d48265', '#91c7ae',
+                                    '#749f83', '#ca8622', '#bda29a', '#6e7074', '#546570', '#c4ccd3',
+                                    '#c12e34', '#e6b600', '#0098d9', '#2b821d', '#005eaa',
+                                    '#005eaa', '#339ca8', '#cda819', '#32a487', '#1790cf', '#a2d4e6',
+
+                                ];
+
+
+                                if (params.name === "Java") {
+
+                                    return color[0];
+                                }
+                                if (params.name == "C") {
+                                    return color[1];
+                                }
+                                if (params.name == "C++") {
+                                    return color[2];
+                                }
+                                if (params.name == "Python") {
+                                    return color[3];
+                                }
+                                if (params.name == "C#") {
+                                    return color[4];
+                                }
+                                if (params.name == "Visual Basic .NET") {
+                                    return color[5];
+                                }
+                                if (params.name === "PHP") {
+                                    return color[6];
+                                }
+                                if (params.name === "JavaScript") {
+                                    return color[7];
+                                }
+                                if (params.name === "(Visual) Basic") {
+                                    return color[8];
+                                }
+                                if (params.name === "Swift") {
+                                    return color[9];
+                                }
+                                if (params.name === "Perl") {
+                                    return color[10];
+                                }
+                                if (params.name === "MATLAB") {
+                                    return color[11];
+                                }
+                                if (params.name === "Objective-C") {
+                                    return color[12];
+                                }
+                                if (params.name === "Go") {
+                                    return color[13];
+                                }
+                                if (params.name === "Delphi") {
+                                    return color[14];
+                                }
+                                if (params.name === "Ruby") {
+                                    return color[15];
+                                }
+
+
+
+                                return color[params.dataIndex];
+                            }
+                        }
+
+                    }]
+                });
+
+
+                i = i + 1;
+                if (i >= 131) {
+                    clearInterval(interval);
+                }
+
+            }, 500);
+
+
+        }
+
+    </script>
+
+</body>
+</html>

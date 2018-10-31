@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="js/jquery-2.2.3.js"></script>
+    <script src="js/Data.js"></script>
+    <script>
+
+    
+     
+        var str = "[";
+
+    
+        for (var j = 0; j < 130; j++) {
+
+       
+            var k = j * 20;
+            var now = json[k].RANGEDATE;
+
+            str += "{'month':'" + now+"','sub':"+"[" ;
+            for (var i = 0; i < 20; i++) {
+
+                var l = k + i;
+                var index = i + 1;
+                str += "{"
+                str += "'index':'" + json[l].RANGETYPE + "','language':'" + json[l].RANGE + "','range':'" + json[l].REMARK + "','data':'" + json[l].RANGEDATE + "'";
+
+                str += "},";
+            }
+     
+
+            str = str.substring(0, str.lastIndexOf(','));
+
+         
+            str+="]},"
+
+        }
+        str = str.substring(0, str.lastIndexOf(','));
+        str = str + "]";
+
+        document.write(str);
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>
